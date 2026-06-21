@@ -4,7 +4,8 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     createFloatingElements();
-    initMusic();
+    initMusicOnScroll();
+    initMusicButton();
     initWishButton();
     initScrollAnimations();
 });
@@ -36,25 +37,64 @@ function createFloatingElements() {
     setInterval(addFloatItem, 1000);
 }
 
-// Music control
-function initMusic() {
+// Music plays on first scroll
+function initMusicOnScroll() {
+    const audio = document.getElementById('bgMusic');
+    const btn = document.getElementById('musicBtn');
+    let hasStarted = false;
+
+    audio.volume = 0.5;
+    audio.currentTime = 23; // Start from 23 seconds
+
+    function startMusic() {
+        if (!hasStarted) {
+            audio.currentTime = 23; // Ensure it starts from 23 sec
+            audio.play().then(() => {
+                hasStarted = true;
+                btn.innerHTML = '<i class="fas fa-pause"></i>';
+                btn.classList.add('playing');
+            }).catch(e => {
+                console.log('Audio play failed:', e);
+            });
+        }
+    }
+
+    // Start music on first scroll
+    window.addEventListener('scroll', function onFirstScroll() {
+        startMusic();
+        window.removeEventListener('scroll', onFirstScroll);
+    }, { once: true });
+
+    // Also start on any click (backup)
+    document.addEventListener('click', function onFirstClick(e) {
+        if (!e.target.closest('.music-btn')) {
+            startMusic();
+        }
+        document.removeEventListener('click', onFirstClick);
+    }, { once: true });
+
+    // Also start on touch (for mobile)
+    document.addEventListener('touchstart', function onFirstTouch() {
+        startMusic();
+        document.removeEventListener('touchstart', onFirstTouch);
+    }, { once: true });
+}
+
+// Music button control
+function initMusicButton() {
     const btn = document.getElementById('musicBtn');
     const audio = document.getElementById('bgMusic');
-    let playing = false;
-
-    audio.volume = 0.4;
 
     btn.addEventListener('click', () => {
-        if (playing) {
-            audio.pause();
-            btn.classList.remove('playing');
-            btn.innerHTML = '<i class="fas fa-music"></i>';
-        } else {
-            audio.play().catch(e => console.log('Audio:', e));
-            btn.classList.add('playing');
+        if (audio.paused) {
+            audio.play();
             btn.innerHTML = '<i class="fas fa-pause"></i>';
+            btn.classList.add('playing');
+        } else {
+            audio.pause();
+            btn.innerHTML = '<i class="fas fa-music"></i>';
+            btn.classList.remove('playing');
         }
-        playing = !playing;
     });
 }
 
@@ -63,7 +103,6 @@ function initWishButton() {
     const btn = document.getElementById('wishBtn');
     const message = document.getElementById('wishMessage');
     const candles = document.querySelector('.candles');
-    const cake = document.querySelector('.cake');
 
     btn.addEventListener('click', () => {
         // Blow out candles
@@ -209,3 +248,5 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 console.log('%c🏸 Happy 22nd Birthday Mohan! 🏸',
     'background: linear-gradient(135deg, #FF9A9E, #FECFEF); color: white; padding: 15px 30px; font-size: 18px; border-radius: 10px; font-weight: bold;');
+console.log('%c🎵 Playing: Woh Din - Chhichhore',
+    'color: #E91E63; font-size: 12px;');
