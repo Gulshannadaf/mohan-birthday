@@ -689,42 +689,329 @@ footer p {
     letter-spacing: 12px;
 }
 
-/* ============ RESPONSIVE ============ */
+/* ============ RESPONSIVE - TABLET ============ */
+@media (max-width: 992px) {
+    .cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .card-featured {
+        grid-column: span 2;
+    }
+
+    .special-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .gallery-item.featured {
+        grid-row: span 1;
+        aspect-ratio: 1;
+    }
+}
+
+/* ============ RESPONSIVE - MOBILE ============ */
 @media (max-width: 768px) {
+    /* Hero Section */
+    .hero {
+        padding: 30px 15px;
+        min-height: 100vh;
+    }
+
+    .emoji-row {
+        font-size: 1.8rem;
+        letter-spacing: 10px;
+        margin-bottom: 10px;
+    }
+
     .title {
-        font-size: 2.8rem;
+        font-size: 2.2rem;
+        margin-bottom: 5px;
     }
 
     .name {
-        font-size: 3.5rem;
+        font-size: 2.8rem;
+        margin-bottom: 15px;
+    }
+
+    .date-badge {
+        padding: 10px 25px;
+        font-size: 1rem;
+        margin-bottom: 15px;
     }
 
     .age {
-        font-size: 4.5rem;
+        font-size: 3.5rem;
+    }
+
+    .age-text {
+        font-size: 1rem;
+    }
+
+    .tagline {
+        font-size: 1.1rem;
+        margin: 10px 0 20px;
+    }
+
+    .badges {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .badge {
+        padding: 8px 20px;
+        font-size: 0.85rem;
+    }
+
+    .scroll-hint {
+        bottom: 20px;
+        font-size: 0.8rem;
+    }
+
+    /* Shapes - smaller on mobile */
+    .shape-1 {
+        width: 200px;
+        height: 200px;
+    }
+
+    .shape-2 {
+        width: 150px;
+        height: 150px;
+    }
+
+    .shape-3 {
+        width: 100px;
+        height: 100px;
+    }
+
+    /* Sections */
+    .about,
+    .special,
+    .memories,
+    .gallery,
+    .wish {
+        padding: 60px 15px;
     }
 
     .section-title {
-        font-size: 2rem;
+        font-size: 1.8rem;
+        margin-bottom: 8px;
+    }
+
+    .section-desc {
+        font-size: 0.95rem;
+        margin-bottom: 30px;
+    }
+
+    /* Cards Grid */
+    .cards-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
     }
 
     .card-featured {
         grid-column: span 1;
     }
 
-    .badges {
-        flex-direction: column;
-        align-items: center;
+    .card {
+        padding: 25px 20px;
+        border-radius: 20px;
     }
 
-    .music-btn {
-        width: 50px;
-        height: 50px;
-        bottom: 20px;
-        right: 20px;
+    .card-icon {
+        font-size: 2.5rem;
+        margin-bottom: 12px;
+    }
+
+    .card h3 {
+        font-size: 1.2rem;
+    }
+
+    .card-label {
+        font-size: 0.85rem;
+    }
+
+    .card-text {
+        font-size: 0.9rem;
+    }
+
+    /* Special Grid */
+    .special-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .special-item {
+        padding: 25px 20px;
+        border-radius: 20px;
+    }
+
+    .special-icon {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+    }
+
+    .special-item h3 {
+        font-size: 1.1rem;
+    }
+
+    .special-item p {
+        font-size: 0.9rem;
+    }
+
+    /* Memories Grid */
+    .memories-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .memory-item {
+        padding: 25px 20px;
+        border-radius: 20px;
+    }
+
+    .memory-icon {
+        font-size: 2rem;
+        margin-bottom: 12px;
+    }
+
+    .memory-item p {
+        font-size: 0.95rem;
     }
 
     .bff-box {
-        padding: 35px 25px;
+        padding: 30px 20px;
+        border-radius: 20px;
+    }
+
+    .bff-box h3 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    }
+
+    .bff-box p {
+        font-size: 0.95rem;
+    }
+
+    .signature {
+        font-size: 1.2rem;
+    }
+
+    /* Gallery Grid */
+    .gallery-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .gallery-item {
+        border-radius: 20px;
+        aspect-ratio: 4/3;
+    }
+
+    .gallery-item.featured {
+        grid-row: span 1;
+        aspect-ratio: 4/3;
+    }
+
+    .gallery-overlay {
+        opacity: 1;
+        padding: 20px 15px 15px;
+    }
+
+    .gallery-overlay span {
+        font-size: 0.95rem;
+    }
+
+    /* Wish Section */
+    .cake {
+        font-size: 3.5rem;
+    }
+
+    .candles {
+        font-size: 1.5rem;
+        letter-spacing: 8px;
+    }
+
+    .wish h2 {
+        font-size: 2rem;
+        margin: 15px 0 8px;
+    }
+
+    .wish > .container > .wish-content > p {
+        font-size: 1rem;
+        margin-bottom: 20px;
+    }
+
+    .wish-btn {
+        padding: 14px 30px;
+        font-size: 1rem;
+    }
+
+    .wish-message h3 {
+        font-size: 1.8rem;
+    }
+
+    .wish-message p {
+        font-size: 1.1rem;
+    }
+
+    /* Music Button */
+    .music-btn {
+        width: 50px;
+        height: 50px;
+        bottom: 15px;
+        right: 15px;
+    }
+
+    .music-btn i {
+        font-size: 1.1rem;
+    }
+
+    /* Footer */
+    footer {
+        padding: 40px 15px;
+    }
+
+    footer p {
+        font-size: 0.9rem;
+    }
+
+    .footer-emojis {
+        font-size: 1.2rem;
+        letter-spacing: 8px;
+    }
+}
+
+/* ============ RESPONSIVE - SMALL MOBILE ============ */
+@media (max-width: 480px) {
+    .title {
+        font-size: 1.8rem;
+    }
+
+    .name {
+        font-size: 2.3rem;
+    }
+
+    .age {
+        font-size: 3rem;
+    }
+
+    .date-badge {
+        padding: 8px 20px;
+        font-size: 0.9rem;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+    }
+
+    .gallery-item {
+        aspect-ratio: 1;
     }
 }
 
