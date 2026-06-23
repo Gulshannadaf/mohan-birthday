@@ -5,7 +5,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     createFloatingElements();
     initMusicOnScroll();
-    initMusicButton();
     initWishButton();
     initScrollAnimations();
 });
@@ -37,65 +36,34 @@ function createFloatingElements() {
     setInterval(addFloatItem, 1000);
 }
 
-// Music plays on first scroll
+// Music plays on first scroll or interaction
 function initMusicOnScroll() {
     const audio = document.getElementById('bgMusic');
-    const btn = document.getElementById('musicBtn');
     let hasStarted = false;
 
     audio.volume = 0.5;
-    audio.currentTime = 23; // Start from 23 seconds
 
     function startMusic() {
         if (!hasStarted) {
-            audio.currentTime = 23; // Ensure it starts from 23 sec
-            audio.play().then(() => {
-                hasStarted = true;
-                btn.innerHTML = '<i class="fas fa-pause"></i>';
-                btn.classList.add('playing');
-            }).catch(e => {
+            hasStarted = true;
+            audio.currentTime = 23; // Start from 23 seconds
+            audio.play().catch(e => {
                 console.log('Audio play failed:', e);
             });
         }
     }
 
     // Start music on first scroll
-    window.addEventListener('scroll', function onFirstScroll() {
-        startMusic();
-        window.removeEventListener('scroll', onFirstScroll);
-    }, { once: true });
+    window.addEventListener('scroll', startMusic, { once: true });
 
-    // Also start on any click (backup)
-    document.addEventListener('click', function onFirstClick(e) {
-        if (!e.target.closest('.music-btn')) {
-            startMusic();
-        }
-        document.removeEventListener('click', onFirstClick);
-    }, { once: true });
+    // Also start on any click (backup for mobile)
+    document.addEventListener('click', startMusic, { once: true });
 
     // Also start on touch (for mobile)
-    document.addEventListener('touchstart', function onFirstTouch() {
-        startMusic();
-        document.removeEventListener('touchstart', onFirstTouch);
-    }, { once: true });
-}
+    document.addEventListener('touchstart', startMusic, { once: true });
 
-// Music button control
-function initMusicButton() {
-    const btn = document.getElementById('musicBtn');
-    const audio = document.getElementById('bgMusic');
-
-    btn.addEventListener('click', () => {
-        if (audio.paused) {
-            audio.play();
-            btn.innerHTML = '<i class="fas fa-pause"></i>';
-            btn.classList.add('playing');
-        } else {
-            audio.pause();
-            btn.innerHTML = '<i class="fas fa-music"></i>';
-            btn.classList.remove('playing');
-        }
-    });
+    // Also try on touchmove (swipe)
+    document.addEventListener('touchmove', startMusic, { once: true });
 }
 
 // Wish button with confetti
@@ -104,7 +72,15 @@ function initWishButton() {
     const message = document.getElementById('wishMessage');
     const candles = document.querySelector('.candles');
 
-    btn.addEventListener('click', () => {
+    if (!btn || !message || !candles) {
+        console.log('Wish elements not found');
+        return;
+    }
+
+    btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
         // Blow out candles
         candles.style.opacity = '0.3';
         candles.style.animation = 'none';
@@ -197,7 +173,7 @@ function initScrollAnimations() {
 
 // Click to create hearts
 document.body.addEventListener('click', (e) => {
-    if (e.target.closest('button') || e.target.closest('.music-btn')) return;
+    if (e.target.closest('button')) return;
 
     const heart = document.createElement('span');
     const hearts = ['💙', '💜', '💖', '✨'];
@@ -248,5 +224,3 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 console.log('%c🏸 Happy 22nd Birthday Mohan! 🏸',
     'background: linear-gradient(135deg, #FF9A9E, #FECFEF); color: white; padding: 15px 30px; font-size: 18px; border-radius: 10px; font-weight: bold;');
-console.log('%c🎵 Playing: Woh Din - Chhichhore',
-    'color: #E91E63; font-size: 12px;');
